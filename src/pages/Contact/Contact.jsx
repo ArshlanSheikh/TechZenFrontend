@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { company, services } from "../../data/siteData";
 import styles from "./Contact.module.css";
+import api from "../../Api/ApiIntersceptor";
 
 const initial = {
   name: "",
@@ -12,18 +13,13 @@ const initial = {
   contactMethod: "Email",
   message: "",
   consent: false,
-  website: "",
-  startedAt: Date.now(),
 };
 
 export default function Contact() {
 
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState({
-    type: "",
-    text: "",
-  });
+
   const [loading, setLoading] = useState(false);
 
   const update = (e) => {
@@ -74,15 +70,10 @@ export default function Contact() {
     return e;
   };
 
+
   const submit = async (e) => {
 
     e.preventDefault();
-
-    setStatus({
-      type: "",
-      text: "",
-    });
-
     const validation = validate();
 
     if (Object.keys(validation).length) {
@@ -90,78 +81,19 @@ export default function Contact() {
       return;
     }
 
-    // Honeypot protection
-    if (form.website) return;
-
-    // Prevent instant bot submission
-    if (Date.now() - form.startedAt < 1200) {
-      setStatus({
-        type: "error",
-        text: "Please wait a moment and try again.",
-      });
-      return;
-    }
-
-    setLoading(true);
-
-    const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT;
+    
 
     try {
-      if (!endpoint) {
-        await new Promise((r) => setTimeout(r, 700));
-
-        setStatus({
-          type: "success",
-          text:"Demo submission successful. Add VITE_CONTACT_ENDPOINT to .env to send real inquiries.",
-        });
-      } 
-      else {
-        const controller = new AbortController();
-
-        const timeout = setTimeout(() => {
-          controller.abort();
-        }, 15000);
-
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            ...form,
-            website: undefined,
-            submittedAt: new Date().toISOString(),
-          }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeout);
-
-        if (!response.ok) {
-          throw new Error(`Server returned ${response.status}`);
-        }
-
-        setStatus({
-          type: "success",
-          text:
-            "Thank you! Your inquiry has been received. We'll get back to you shortly.",
-        });
-      }
-
-      setForm({
-        ...initial,
-        startedAt: Date.now(),
-      });
-    } catch (err) {
-      setStatus({
-        type: "error",
-        text:
-          err.name === "AbortError"
-            ? "The request timed out. Please try again or contact us directly."
-            : "Something went wrong while sending your inquiry. Please try again or contact us directly.",
-      });
-    } finally {
+      const response = await api.post('/v1/inquiry/register',form)
+      console.log("response = ",response)
+      alert('Inquiry submited successfully...')
+    
+    } 
+    catch (error) {
+      console.log('failed to submit enquiery = ',error.response.data)
+      alert(error.response.data.message)
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -208,6 +140,7 @@ export default function Contact() {
               Business hours: {company.hours}
             </small>
           </div>
+
 
           {/* FORM */}
           <form
@@ -310,7 +243,7 @@ export default function Contact() {
                 name="message"
                 rows="5"
                 minLength="20"
-                maxLength="3000"
+                maxLength="2000"
                 value={form.message}
                 onChange={update}
                 placeholder="What are you trying to achieve, and what challenge are you facing?"
@@ -323,7 +256,7 @@ export default function Contact() {
                 </small>
 
                 <small>
-                  {form.message.length}/3000
+                  {form.message.length}/2000
                 </small>
               </div>
             </div>
@@ -360,25 +293,13 @@ export default function Contact() {
               )}
             </button>
 
-            {/* STATUS */}
-            {status.text && (
-              <div
-                className={`${styles.formStatus} ${
-                  status.type === "success"
-                    ? styles.success
-                    : styles.error
-                }`}
-                role="status"
-                aria-live="polite"
-              >
-                {status.text}
-              </div>
-            )}
+            
 
             <p className={styles.formNote}>
               Never put private API keys, SMTP passwords, or
               database credentials in frontend React code.
             </p>
+
           </form>
         </div>
       </div>
@@ -473,3 +394,6 @@ function SelectField({
     </div>
   );
 }
+
+
+
