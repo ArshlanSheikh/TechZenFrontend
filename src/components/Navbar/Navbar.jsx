@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { company, projects, services ,Tranings } from "../../data/siteData";
+import { company, Tranings } from "../../data/siteData";
 import styles from "./Navbar.module.css";
+import usePublicContent from "../../hooks/usePublicContent";
 
 
 
@@ -24,6 +25,8 @@ import {
 
 
 export default function Navbar() {
+  const { items: projects } = usePublicContent("projects");
+  const { items: services } = usePublicContent("services");
 
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -464,8 +467,8 @@ const NavbarDropdownMobileView = ({
       >
         {items.map((item) => (
           <Link
-            key={item.id} 
-            to={`/#${title.toLowerCase().replace(/\s+/g, '-')}-${item.id}`}
+            key={item._id || item.slug || item.id} 
+            to={`/#${title.toLowerCase().replace(/\s+/g, '-')}-${item.slug || item.id || item._id}`}
             onClick={closeMenu}
           >
             {item.title}
@@ -491,9 +494,9 @@ const NavbarDropdown = ({ title, items, viewAllLink }) => {
       <div className={styles.dropdownMenu}>
         {items.map((item, index) => (
           <Link
-            key={item.id}
+            key={item._id || item.slug || item.id}
             // to={`/#${title.toLowerCase().replace(/\s+/g, '-')}-${item.id}`}
-            to={`/#${title.toLowerCase().replace(/\s+/g, '-')}-${item.id}`}
+            to={`/#${title.toLowerCase().replace(/\s+/g, '-')}-${item.slug || item.id || item._id}`}
             className={styles.dropdownItem}
           >
             <span className={styles.dropdownNumber}>

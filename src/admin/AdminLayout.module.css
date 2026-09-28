@@ -1,0 +1,19 @@
+.shell {
+  --admin-sidebar-width: 244px;
+  min-height: 100vh;
+  padding-top: 75px;
+  background: #f3f6f1;
+}
+
+.main {
+  min-height: calc(100vh - 75px);
+  margin-left: var(--admin-sidebar-width);
+  padding: 34px clamp(18px, 3vw, 44px) 54px;
+}
+
+@media (max-width: 760px) {
+  .shell { padding-top: 66px; }
+  .main { min-height: calc(100vh - 66px); margin-left: 0; padding: 24px 16px 40px; }
+  .collapsed { --admin-sidebar-width: 244px; }
+}
+.collapsed { --admin-sidebar-width: 70px; }

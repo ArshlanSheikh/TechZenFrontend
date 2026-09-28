@@ -1,11 +1,12 @@
 
 import { useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
-import { faqs } from "../../data/siteData";
+import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./FAQ.module.css";
 
 export default function FAQ() {
   const [open, setOpen] = useState(null);
+  const { items: faqs, loading } = usePublicContent("faqs");
 
   return (
     <section className={styles.section} id="faq">
@@ -34,7 +35,7 @@ export default function FAQ() {
 
           {/* FAQ LIST */}
           <div className={styles.faqList}>
-            {faqs.map(([q, a], i) => {
+            {loading ? <p>Loading questions...</p> : faqs.map((faq, i) => {
               const isOpen = open === i;
 
               return (
@@ -42,7 +43,7 @@ export default function FAQ() {
                   className={`${styles.faqItem} ${
                     isOpen ? styles.open : ""
                   }`}
-                  key={q}
+                  key={faq._id}
                 >
                   <button
                     type="button"
@@ -52,7 +53,7 @@ export default function FAQ() {
                       setOpen(isOpen ? null : i)
                     }
                   >
-                    <span>{q}</span>
+                    <span>{faq.question}</span>
 
                     <Plus
                       size={20}
@@ -66,7 +67,7 @@ export default function FAQ() {
                       maxHeight: isOpen ? "200px" : "0px",
                     }}
                   >
-                    <p>{a}</p>
+                    <p>{faq.answer}</p>
                   </div>
                 </div>
               );

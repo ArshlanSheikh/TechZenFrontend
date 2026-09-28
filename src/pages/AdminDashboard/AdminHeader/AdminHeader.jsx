@@ -1,74 +1,38 @@
-
-
-import {
-  Menu,
-  Search,
-  Bell,
-  CalendarDays,
-  ChevronDown,
-} from "lucide-react";
-
+import { LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
 import styles from "./AdminHeader.module.css";
 
-function AdminHeader({ toggleSidebar }) {
-  const today = new Date().toLocaleDateString("en-US", {
+function AdminHeader({ user, onLogout }) {
+  const today = new Intl.DateTimeFormat("en", {
+    weekday: "short",
     day: "numeric",
     month: "short",
-    year: "numeric",
-  });
+  }).format(new Date());
+  const name = [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "Admin";
+  const initials = name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
 
   return (
     <header className={styles.header}>
-      <div className={styles.left}>
-        <button
-          className={styles.menuBtn}
-          onClick={toggleSidebar}
-        >
-          <Menu size={22} />
-        </button>
-
-        <div>
-          <h2 className={styles.title}>Admin Dashboard</h2>
-          <p className={styles.subtitle}>
-            Welcome back, Apna Mens Wear 👋
-          </p>
-        </div>
-      </div>
-
+      <Link className={styles.brand} to="/" aria-label="TechZen home">
+        <span>TECHZEN</span>
+        <small>ADMIN</small>
+      </Link>
       <div className={styles.right}>
-        <div className={styles.search}>
-          <Search size={18} />
-          <input
-            type="text"
-            placeholder="Search products, orders..."
-          />
-        </div>
-
-        <div className={styles.date}>
-          <CalendarDays size={16} />
-          <span>{today}</span>
-        </div>
-
-        <button className={styles.notification}>
-          <Bell size={20} />
-          <span className={styles.badge}>3</span>
-        </button>
-
+        <time className={styles.date}>{today}</time>
         <div className={styles.profile}>
-          <img
-            src="https://i.pinimg.com/736x/f9/6a/f0/f96af0d61f141448f81cddfa4d2775dc.jpg"
-            alt="admin"
-          />
-          <div>
-            <h4>Apna Mens Wear</h4>
-            <p>Administrator</p>
-          </div>
-          <ChevronDown size={16} />
+          <span className={styles.avatar} aria-hidden="true">{initials}</span>
+          <span className={styles.identity}>
+            <strong>{name}</strong>
+            <small>Administrator</small>
+          </span>
         </div>
+        <button className={styles.logout} type="button" onClick={onLogout} aria-label="Log out" title="Log out">
+          <LogOut size={17} />
+          <span>Log out</span>
+        </button>
       </div>
     </header>
   );
 }
 
 export default AdminHeader;
-

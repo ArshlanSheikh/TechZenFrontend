@@ -14,7 +14,7 @@ import {
   Smartphone,
 } from "lucide-react";
 
-import { services } from "../../data/siteData";
+import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./Services.module.css";
 
 const icons = {
@@ -27,6 +27,7 @@ const icons = {
 };
 
 export default function Services() {
+  const { items: services, loading } = usePublicContent("services");
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const location = useLocation();
@@ -34,7 +35,7 @@ export default function Services() {
   useEffect(() => {
     const serviceId = location.hash.replace("#services-", "");
     const serviceIndex = services.findIndex(
-      (service) => service.id === serviceId
+      (service) => (service.slug || service.id || service._id) === serviceId
     );
 
     if (serviceIndex >= 0) {
@@ -48,21 +49,27 @@ export default function Services() {
         });
       });
     }
-  }, [location.hash]);
+  }, [location.hash, services]);
 
 
   /*
     Automatically rotate every 2.2 seconds
   */
   useEffect(() => {
-    if (paused) return;
+    if (paused || loading || services.length === 0) return;
 
     const interval = setInterval(() => {
       setActive((current) => (current + 1) % services.length);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [paused]);
+  }, [paused, loading, services.length]);
+
+  if (loading) {
+    return <section className={styles.services} id="services" aria-label="Services" />;
+  }
+
+  if (services.length === 0) return null;
 
   /*
     Move to previous card
@@ -177,8 +184,8 @@ export default function Services() {
 
               return (
                 <article
-                  id={`service-${service.id}`}
-                  key={service.title}
+                  id={`services-${service.slug || service.id || service._id}`}
+                  key={service._id || service.slug || service.title}
                   className={`${styles.card} ${
                     styles[position]
                   }`}

@@ -1,11 +1,11 @@
 // SignupLogin.jsx
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../Api/Axios";
 import styles from "./SignupLogin.module.css";
 import { Eye, EyeOff, X, Mail, Phone, User, Lock, MapPin, Home } from "lucide-react";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
-import { SetAccessToken } from "../Api/TokenStore";
+import { useAuth } from "./AuthProvider";
 
 
 // NAYA IMPORT
@@ -28,6 +28,8 @@ const FIELD_LABELS = {
 // NAYA PROP: initialMode -> /login route se "login" aur /signup route se "signup" milega
 function SignupLogin({ close, initialMode = "login" }) {
   const navigate = useNavigate();
+  const { login: authenticate } = useAuth();
+  const location = useLocation();
 // NAYA: global auth state update karne ke liye
 
   const [mode, setMode] = useState(initialMode);
@@ -263,19 +265,17 @@ function SignupLogin({ close, initialMode = "login" }) {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
-          phone: Number(form.phone),
+          phone: form.phone,
           password: form.password,
-          opt: otp.join(""),
+          otp: otp.join(""),
           address: {
             country: form.country,
             state: form.state,
             city: form.city,
-            pinCode: Number(form.pinCode),
+            pinCode: form.pinCode,
             addressLine1: form.addressLine1,
             addressLine2: form.addressLine2,
           },
-          profileImage:
-            "https://images.unsplash.com/photo-1483985988355-763728e1935b",
         };
 
         const response = await api.post("/v1/user/signup", payload);
@@ -285,7 +285,7 @@ function SignupLogin({ close, initialMode = "login" }) {
           return;
         }
 
-        alert(response.data.message);
+        setErrors({ api: "Account created. Sign in with your new credentials." });
         setMode("login");
         setForm({
           firstName: "",
@@ -305,24 +305,15 @@ function SignupLogin({ close, initialMode = "login" }) {
         setOtpSent(false);
         setOtp(["", "", "", "", "", ""]);
       } else {
-        const response = await api.post("/v1/user/login", {
+        const user = await authenticate({
           identifier: login.identifier,
           password: login.password,
         });
-
-        if (!response.data?.success) {
-          applyBackendResponse(response.data);
-          return;
-        }
-
-        SetAccessToken(response?.data?.data?.AccessToken);
-
-        // FIX: profile fetch karke global AuthContext update karo
-        // taaki Header turant re-render ho aur login button gayab ho jaaye
-
-        alert(response.data.message);
-        navigate("/");
-        close?.();
+        const roles = Array.isArray(user.roles) ? user.roles : [user.role];
+        const destination = roles.includes("admin")
+          ? "/admin"
+          : location.state?.from?.pathname || "/";
+        navigate(destination, { replace: true });
       }
     } catch (error) {
       if (error?.response?.data && typeof error.response.data.success !== "undefined") {
@@ -355,8 +346,8 @@ function SignupLogin({ close, initialMode = "login" }) {
             alt="Fashion"
           />
           <div className={styles.imageOverlay}>
-            <h2>Welcome to Apna</h2>
-            <p>Your style destination</p>
+            <h2>Build with TechZen</h2>
+            <p>Clear thinking. Useful technology.</p>
           </div>
         </div>
 
@@ -387,8 +378,8 @@ function SignupLogin({ close, initialMode = "login" }) {
           <h1>{mode === "signup" ? "Create Account" : "Welcome Back"}</h1>
           <p className={styles.subtitle}>
             {mode === "signup"
-              ? "Join us and start shopping"
-              : "Login to continue shopping"}
+              ? "Create your TechZen account"
+              : "Sign in to continue"}
           </p>
 
           {errors.api && <p className={styles.apiError}>{errors.api}</p>}

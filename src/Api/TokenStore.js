@@ -1,19 +1,5 @@
+import { ClearAuth, GetAccessToken, SetAccessToken } from "../Auth/AuthStore";
 
-let AccessToken = null
+export { GetAccessToken, SetAccessToken };
 
-const GetAccessToken = ()=>{
-    return AccessToken
-}
-
-const SetAccessToken = (Token)=>{
-    AccessToken = Token
-}
-
-const ClearAccessToken = ()=>{
-    AccessToken = null
-}
-
-
-
-
-export {AccessToken,SetAccessToken,GetAccessToken,ClearAccessToken}
+export const ClearAccessToken = ClearAuth;

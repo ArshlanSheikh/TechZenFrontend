@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { company, services } from "../../data/siteData";
+import { company } from "../../data/siteData";
+import usePublicContent from "../../hooks/usePublicContent";
+import { publicContentApi } from "../../Api/CmsApi";
 import styles from "./Contact.module.css";
 import api from "../../Api/ApiIntersceptor";
 
@@ -16,6 +18,14 @@ const initial = {
 };
 
 export default function Contact() {
+  const { items: managedServices } = usePublicContent("services");
+  const serviceOptions = managedServices.map((service) => service.title);
+  const [managedCompany, setManagedCompany] = useState(null);
+  const companyInfo = { ...company, ...managedCompany };
+
+  useEffect(() => {
+    publicContentApi.company().then(setManagedCompany).catch(() => {});
+  }, []);
 
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
@@ -118,26 +128,26 @@ export default function Contact() {
             </p>
 
             <div className={styles.contactDetails}>
-              <a href={`mailto:${company.email}`}>
+              <a href={`mailto:${companyInfo.email}`}>
                 <Mail size={18} />
-                <span>{company.email}</span>
+                <span>{companyInfo.email}</span>
               </a>
 
               <a
-                href={`tel:${company.phone.replace(/\s/g, "")}`}
+                href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
               >
                 <Phone size={18} />
-                <span>{company.phone}</span>
+                <span>{companyInfo.phone}</span>
               </a>
 
               <span>
                 <MapPin size={18} />
-                <span>{company.location}</span>
+                <span>{companyInfo.location}</span>
               </span>
             </div>
 
             <small>
-              Business hours: {company.hours}
+              Business hours: {companyInfo.hours}
             </small>
           </div>
 
@@ -211,7 +221,7 @@ export default function Contact() {
                 required
                 options={[
                   "Select a service",
-                  ...services.map((s) => s.title),
+                  ...serviceOptions,
                   "Other",
                 ]}
               />

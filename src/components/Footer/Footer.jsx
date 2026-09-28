@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import { company } from "../../data/siteData";
+import { publicContentApi } from "../../Api/CmsApi";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const [managedCompany, setManagedCompany] = useState(null);
+  const companyInfo = { ...company, ...managedCompany };
+
+  useEffect(() => {
+    publicContentApi.company().then(setManagedCompany).catch(() => {});
+  }, []);
 
   return (
     <footer className={styles.siteFooter}>
@@ -15,9 +23,9 @@ export default function Footer() {
               <span className={styles.brandMark}>T</span>
 
               <span className={styles.brandText}>
-                {company.name}
+                {companyInfo.name}
                 <span className={styles.brandMuted}>
-                  {company.descriptor}
+                  {companyInfo.descriptor}
                 </span>
               </span>
             </a>
@@ -52,14 +60,14 @@ export default function Footer() {
           <div className={styles.footerColumn}>
             <h4>Connect</h4>
 
-            <a href={`mailto:${company.email}`}>
-              {company.email}
+            <a href={`mailto:${companyInfo.email}`}>
+              {companyInfo.email}
             </a>
 
             <a
-              href={`tel:${company.phone.replace(/\s/g, "")}`}
+              href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
             >
-              {company.phone}
+              {companyInfo.phone}
             </a>
 
             <a href="#contact">
@@ -75,7 +83,7 @@ export default function Footer() {
         <div className={`${styles.container} ${styles.footerBottom}`}>
 
           <span>
-            © {year} {company.name} {company.descriptor}.
+            © {year} {companyInfo.name} {companyInfo.descriptor}.
             All rights reserved.
           </span>
 

@@ -1,10 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "../../data/siteData";
+import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./Project.module.css";
 
 
 
 export default function Project() {
+  const { items: projects, loading, error } = usePublicContent("projects");
+
   return (
     <section className={styles.section} id="projects">
       <div className={styles.container}>
@@ -27,15 +29,17 @@ export default function Project() {
           </p>
         </div>
 
-        {/* Projects */}
+        {loading && <p role="status">Loading projects...</p>}
+        {error && <p role="alert">{error}</p>}
+        {!loading && !error && projects.length === 0 && <p>No projects to display right now.</p>}
         <div className={styles.projectsList}>
           {projects.map((project, index) => (
             <article
-              id={`projects-${project.id}`}
+              id={`projects-${project.slug || project.id || project._id}`}
               className={`${styles.project} ${
                 index % 2 !== 0 ? styles.reverse : ""
               }`}
-              key={project.id || project.title}
+              key={project._id || project.slug}
             >
               {/* Project Visual */}
               <div className={styles.projectVisual}>
@@ -72,7 +76,7 @@ export default function Project() {
 
                 <h3>{project.title}</h3>
 
-                <p>{project.description}</p>
+                <p>{project.shortDescription || project.description}</p>
 
                 {/* Technologies */}
                 {project.technologies?.length > 0 && (
@@ -84,9 +88,9 @@ export default function Project() {
                 )}
 
                 {/* Link */}
-                {project.link && (
+                {(project.projectUrl || project.link) && (
                   <a
-                    href={project.link}
+                    href={project.projectUrl || project.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.projectLink}

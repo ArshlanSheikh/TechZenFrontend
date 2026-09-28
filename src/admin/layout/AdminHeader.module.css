@@ -1,0 +1,30 @@
+.header {
+  position: fixed;
+  z-index: 30;
+  inset: 0 0 auto;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid #dbe4df;
+  background: #fff;
+}
+
+.brand { display: flex; align-items: baseline; gap: 10px; color: #142a2b; font-size: 16px; font-weight: 800; text-decoration: none; }
+.brand small { padding-left: 10px; border-left: 1px solid #dbe4df; color: #16806c; font-size: 10px; font-weight: 700; }
+.account { display: flex; align-items: center; gap: 11px; }
+.avatar { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: #dcefe7; color: #145f51; font-size: 12px; font-weight: 750; }
+.identity strong, .identity small { display: block; }
+.identity strong { color: #142a2b; font-size: 12px; }
+.identity small { margin-top: 3px; color: #647575; font-size: 10px; }
+.logout { height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid #dbe4df; border-radius: 4px; background: white; color: #263b3a; font-size: 12px; cursor: pointer; }
+.logout:hover { border-color: #16806c; color: #145f51; }
+
+@media (max-width: 600px) {
+  .header { height: 66px; padding: 0 14px; }
+  .brand { margin-left: 42px; }
+  .identity { display: none; }
+  .logout { width: 36px; justify-content: center; padding: 0; }
+  .logout span { display: none; }
+}
