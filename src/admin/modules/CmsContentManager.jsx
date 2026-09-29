@@ -54,12 +54,27 @@ export default function CmsContentManager({ config }) {
         if (field.type === "number") payload[field.name] = Number(payload[field.name] || 0);
         if (field.type === "list") payload[field.name] = Array.isArray(payload[field.name]) ? payload[field.name] : payload[field.name].split(",").map((item) => item.trim()).filter(Boolean);
       }
+      if (import.meta.env.DEV) {
+        console.info("[cms save] started", {
+          resource: config.api,
+          operation: editing ? "update" : "create",
+          hasImageUrl: typeof payload.image === "string" && Boolean(payload.image.trim()),
+        });
+      }
       if (editing) await api.update(editing, payload);
       else await api.create(payload);
+      if (import.meta.env.DEV) console.info("[cms save] succeeded", { resource: config.api });
       setFormOpen(false);
       setNotice(editing ? "Changes saved." : "Content created.");
       await load();
     } catch (requestError) {
+      if (import.meta.env.DEV) {
+        console.error("[cms save] failed", {
+          status: requestError.response?.status || null,
+          error: requestError.response?.data?.error || null,
+          message: requestError.response?.data?.message || requestError.message,
+        });
+      }
       setError(requestError.response?.data?.message || "Could not save this content.");
     } finally { setSaving(false); }
   };

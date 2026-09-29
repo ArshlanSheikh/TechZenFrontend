@@ -10,9 +10,34 @@ export const contentApi = (resource) => ({
 export const uploadImage = async (file) => {
   const body = new FormData();
   body.append("image", file);
-  return (await api.post("/v1/admin/uploads", body, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })).data?.data?.url;
+  if (import.meta.env.DEV) {
+    console.info("[cms upload] sending file", { type: file.type, sizeBytes: file.size });
+  }
+
+  try {
+    const response = await api.post("/v1/admin/uploads", body, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    const url = response.data?.data?.url;
+    if (import.meta.env.DEV) {
+      console.info("[cms upload] response", {
+        status: response.status,
+        hasUrl: Boolean(url),
+        error: response.data?.error || null,
+      });
+    }
+    if (!url) throw new Error("Upload response did not include an image URL.");
+    return url;
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error("[cms upload] failed", {
+        status: error.response?.status || null,
+        error: error.response?.data?.error || null,
+        message: error.response?.data?.message || error.message,
+      });
+    }
+    throw error;
+  }
 };
 
 export const publicContentApi = {
