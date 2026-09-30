@@ -107,9 +107,6 @@ export default function Navbar() {
             <img className={styles.logo} src="TechZenLogo.png" alt="" />
 
 
-
-
-
             {/* DESKTOP NAV */}
             <nav
               className={styles.desktopNav}
@@ -232,103 +229,6 @@ export default function Navbar() {
               <span>About</span>
               {/* <ArrowRight size={17} /> */}
             </Link>
-
-            {/* SERVICES */}
-            {/* <div className={styles.mobileDropdown}>
-              <button
-                className={styles.mobileDropdownTrigger}
-                onClick={() =>
-                  setMobileServicesOpen(
-                    !mobileServicesOpen
-                  )
-                }
-              >
-                <BriefcaseBusiness />
-                <span>Services</span>
-
-                <ChevronDown
-                  size={16}
-                  className={
-                    mobileServicesOpen
-                      ? styles.chevronOpen
-                      : ""
-                  }
-                />
-              </button>
-
-              <div
-                className={`${styles.mobileDropdownMenu} ${
-                  mobileServicesOpen
-                    ? styles.mobileDropdownOpen
-                    : ""
-                }`}
-              >
-                {services.map((service) => {
-                  return (
-                    <Link
-                      key={service.id}
-                      to={`/#services-${service.id}`}
-                      onClick={closeMenu}
-                    >
-                      {service.title}
-                      <ArrowRight size={15} />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div> */}
-
-
-             {/* PROJECTS */}
-            {/* <div className={styles.mobileDropdown}>
-              <button
-                className={styles.mobileDropdownTrigger}
-                onClick={() =>
-                  setMobileProjectsOpen(
-                    !mobileProjectsOpen
-                  )
-                }
-              >
-                <FolderCode />
-                <span>Products</span>
-
-                <ChevronDown
-                  size={18}
-                  className={
-                    mobileProjectsOpen
-                      ? styles.chevronOpen
-                      : ""
-                  }
-                />
-              </button>
-
-              <div
-                className={`${styles.mobileDropdownMenu} ${
-                  mobileProjectsOpen
-                    ? styles.mobileDropdownOpen
-                    : ""
-                }`}
-              >
-                {projects.map((project) => (
-                  <Link
-                    key={project.id}
-                    to={`/#project-${project.id}`}
-                    onClick={closeMenu}
-                  >
-                    {project.title}
-                    <ArrowRight size={15} />
-                  </Link>
-                ))}
-
-                <Link
-                  to="/projects"
-                  onClick={closeMenu}
-                >
-                  View all projects
-                  <ArrowRight size={15} />
-                </Link>
-              </div>
-            </div> */}
 
             <NavbarDropdownMobileView
               title="Services"
