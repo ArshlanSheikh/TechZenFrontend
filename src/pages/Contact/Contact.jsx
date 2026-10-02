@@ -97,6 +97,8 @@ export default function Contact() {
       const response = await api.post('/v1/inquiry/register',form)
       console.log("response = ",response)
       alert('Inquiry submited successfully...')
+      setForm(initial);
+      setErrors({});
     
     } 
     catch (error) {

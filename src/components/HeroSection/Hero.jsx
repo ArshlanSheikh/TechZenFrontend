@@ -60,13 +60,13 @@ export default function Hero() {
           {/* LEFT SIDE */}
           <div className={styles.heroText}>
 
-            <div className={styles.badge}>
+            {/* <div className={styles.badge}>
               <span className={styles.badgeIcon}>
                 <Sparkles size={14} />
               </span>
 
               AI-POWERED STRATEGY
-            </div>
+            </div> */}
 
             <h1>
               Turn complex ideas into{" "}
@@ -97,7 +97,7 @@ export default function Hero() {
               </a>
             </div>
 
-            <div className={styles.stats}>
+            {/* <div className={styles.stats}>
               <div>
                 <strong>10+</strong>
                 <span>Years experience</span>
@@ -112,7 +112,7 @@ export default function Hero() {
                 <strong>500+</strong>
                 <span>Projects delivered</span>
               </div>
-            </div>
+            </div> */}
 
           </div>
 
@@ -169,8 +169,8 @@ export default function Hero() {
                   <span className={styles.corePulse} />
 
                   <div className={styles.aiText}>
-                    <small>AI</small>
-                    <strong>CORE</strong>
+                    <small></small>
+                    <strong>TechZen</strong>
                   </div>
                 </div>
               </div>

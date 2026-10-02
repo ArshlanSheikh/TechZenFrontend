@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import styles from "./OurTeamSection.module.css";
 import usePublicContent from "../../hooks/usePublicContent";
 
@@ -5,6 +6,19 @@ import usePublicContent from "../../hooks/usePublicContent";
 const OurTeam = () => {
   const { items: teamMembers, loading } = usePublicContent("team");
   const sliderData = [...teamMembers, ...teamMembers];
+  const scrollPauseTimer = useRef();
+  const [manualScrollPaused, setManualScrollPaused] = useState(false);
+
+  useEffect(() => () => window.clearTimeout(scrollPauseTimer.current), []);
+
+  const handleScroll = () => {
+    setManualScrollPaused(true);
+    window.clearTimeout(scrollPauseTimer.current);
+    scrollPauseTimer.current = window.setTimeout(
+      () => setManualScrollPaused(false),
+      700
+    );
+  };
 
   if (!loading && teamMembers.length === 0) return null;
 
@@ -13,7 +27,10 @@ const OurTeam = () => {
       <div className={styles.container}>
         <h2 className={styles.heading}>Meet Our Team</h2>
 
-        <div className={styles.slider}>
+        <div
+          className={`${styles.slider} ${manualScrollPaused ? styles.manualScrolling : ""}`}
+          onScroll={handleScroll}
+        >
           <div className={styles.track}>
             {sliderData.map((member, index) => (
               <div

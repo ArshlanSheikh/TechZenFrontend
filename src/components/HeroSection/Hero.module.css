@@ -177,7 +177,7 @@
   letter-spacing: -3.5px;
 
   font-weight: 700;
-  font-family: cursive;
+  font-family:'Times New Roman', Times, serif;
 }
 
 .heroText h1 span {
@@ -747,7 +747,7 @@
 
   color: #ffffff;
 
-  font-size: 18px;
+  font-size: 16px;
 
   letter-spacing: 2px;
 }
@@ -1247,7 +1247,7 @@
   }
 
   .aiText strong {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .floatingCard {

@@ -272,9 +272,9 @@
 
   width: 330px;
 
-  height: 470px;
+  height: 420px;
 
-  padding: 27px;
+  padding: 24px;
 
   display: flex;
   flex-direction: column;
@@ -533,14 +533,16 @@
 ========================================= */
 
 .cardContent {
-  margin-top: 40px;
+  margin-top: 30px;
 
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 
 .cardContent h3 {
-  margin: 0 0 15px;
+  margin: 0 0 11px;
 
   color: #0f172a;
 
@@ -572,9 +574,9 @@
 
   flex-direction: column;
 
-  gap: 11px;
+  gap: 8px;
 
-  margin-top: 25px;
+  margin-top: 18px;
 }
 
 
@@ -607,7 +609,7 @@
 .cardBottom {
   flex-shrink: 0;
 
-  margin-top: 20px;
+  margin-top: 14px;
 
   display: flex;
 
@@ -615,7 +617,7 @@
 
   justify-content: space-between;
 
-  padding-top: 17px;
+  padding-top: 12px;
 
   border-top: 1px solid #e2e8f0;
 
@@ -894,7 +896,7 @@
   .card {
     width: 300px;
 
-    height: 450px;
+    height: 410px;
   }
 
 }
@@ -950,7 +952,7 @@
   .card {
     width: 290px;
 
-    height: 440px;
+    height: 400px;
   }
 
 }
@@ -1047,9 +1049,9 @@
   .card {
     width: 285px;
 
-    height: 430px;
+    height: 390px;
 
-    padding: 25px;
+    padding: 22px;
   }
 
 
@@ -1114,9 +1116,9 @@
   .card {
     width: 270px;
 
-    height: 420px;
+    height: 380px;
 
-    padding: 23px;
+    padding: 20px;
   }
 
 

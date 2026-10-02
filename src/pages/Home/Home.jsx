@@ -9,6 +9,7 @@ import Hero from '../../components/HeroSection/Hero'
 import Process from '../../components/ProcessSection/Process'
 import Project from '../../components/ProjectSection/Project'
 import Services from '../../components/ServicesSection/Services'
+import TrainingSection from '../../components/TrainingSection/TrainingSection'
 import WhyUs from '../../components/WhyUsSection/WhyUs'
 import About from '../../pages/About/About'
 import Contact from '../../pages/Contact/Contact'
@@ -61,6 +62,7 @@ const Home =()=>{
                <Process />
                <Project/>
                <OurTeam/>
+               <TrainingSection />
                <FAQ />
                <Contact/>
         </>

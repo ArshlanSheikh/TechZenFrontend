@@ -136,7 +136,7 @@ export default function Navbar() {
               <NavbarDropdown
                 title="Trainings"
                 items={Tranings}
-                viewAllLink="/#tranings"
+                viewAllLink="/#trainings"
               />
 
 
@@ -257,7 +257,7 @@ export default function Navbar() {
             />
 
             <NavbarDropdownMobileView
-              title="Tranings"
+              title="Trainings"
               items={Tranings}
               isOpen={mobileTrainingsOpen}
               onToggle={() =>

@@ -70,6 +70,24 @@
   color: #64748b;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .slider {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .manualScrolling .track {
+    animation-play-state: paused;
+  }
+}
+
 @keyframes scroll {
   from {
     transform: translateX(0);
