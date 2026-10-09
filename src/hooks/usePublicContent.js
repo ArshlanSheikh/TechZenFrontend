@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { publicContentApi } from "../Api/CmsApi";
 
 export default function usePublicContent(resource) {
+  
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
