@@ -128,7 +128,7 @@ export default function Navbar() {
               />
 
               <NavbarDropdown
-                title="Projects"
+                title="Products"
                 items={projects}
                 viewAllLink="/#projects"
               />
@@ -142,14 +142,14 @@ export default function Navbar() {
 
 
               {/* WHY US */}
-              <Link to="/#why-us">
+              {/* <Link to="/#why-us">
                 Why Us
-              </Link>
+              </Link> */}
 
               {/* PROCESS */}
-              <Link to="/#process">
+              {/* <Link to="/#process">
                 Process
-              </Link>
+              </Link> */}
 
               {/* FAQ */}
               <Link to="/#faq">
@@ -244,7 +244,7 @@ export default function Navbar() {
             />
 
             <NavbarDropdownMobileView
-              title="Projects"
+              title="Products"
               items={projects}
               isOpen={mobileProjectsOpen}
               onToggle={() =>
@@ -273,25 +273,23 @@ export default function Navbar() {
 
 
             {/* WHY US */}
-            <Link
+            {/* <Link
               to="/#why-us"
               onClick={closeMenu}
             >
               <Target />
               <span>Why Us</span>
-              {/* <ArrowRight size={17} /> */}
-            </Link>
+            </Link> */}
 
             {/* PROCESS */}
-            <Link
+            {/* <Link
               to="/#process"
               onClick={closeMenu}
             >
              
               <Route />
               <span>Process</span>
-              {/* <ArrowRight size={17} /> */}
-            </Link>
+            </Link> */}
 
             {/* FAQ */}
             <Link
