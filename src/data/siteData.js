@@ -1,10 +1,16 @@
 export const company = {
   name: "TechZen",
-  descriptor: "Consulting & Software Devlopment",
-  email: "hello@example.com",
-  phone: "+91 00000 00000",
-  location: "Your City, India",
-  hours: "Mon–Fri, 9:00 AM–6:00 PM",
+  descriptor: "Consulting & Software Development",
+  email: "techzen@gmail.com",
+  phone: "9302039953",
+  location: "Chhatarpur, MP, India",
+  hours: "Monday - Saturday, 10:00 AM - 6:00 PM",
+  linkedin: "https://www.linkedin.com/company/techzen",
+  facebook: "https://www.facebook.com/techzen",
+  whatsapp: "https://wa.me/919302039953",
+  instagram: "https://www.instagram.com/techzen",
+  github: "https://github.com/ArshlanSheikh",
+  twitter: "",
 };
 
 

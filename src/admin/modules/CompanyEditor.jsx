@@ -2,12 +2,44 @@ import { useEffect, useState } from "react";
 import { publicContentApi } from "../../Api/CmsApi";
 import styles from "./AdminPages.module.css";
 
-const initial = { name: "TechZen", descriptor: "", email: "", phone: "", location: "", hours: "", introduction: "", about: "", mission: "", vision: "", whyChooseUs: "", statistics: "" };
-const toLines = (entries, left, right) => (entries || []).map((entry) => `${entry[left] || ""} | ${entry[right] || ""}`).join("\n");
-const fromLines = (value, left, right) => value.split("\n").map((line) => line.trim()).filter(Boolean).map((line) => {
-  const separator = line.indexOf("|");
-  return { [left]: (separator < 0 ? line : line.slice(0, separator)).trim(), [right]: separator < 0 ? "" : line.slice(separator + 1).trim() };
-});
+const initial = {
+  name: "TechZen",
+  descriptor: "",
+  email: "",
+  phone: "",
+  location: "",
+  hours: "",
+  linkedin: "",
+  facebook: "",
+  whatsapp: "",
+  instagram: "",
+  github: "",
+  twitter: "",
+  introduction: "",
+  about: "",
+  mission: "",
+  vision: "",
+  whyChooseUs: "",
+  statistics: "",
+};
+
+const toLines = (entries, left, right) =>
+  (entries || [])
+    .map((entry) => `${entry[left] || ""} | ${entry[right] || ""}`)
+    .join("\n");
+
+const fromLines = (value, left, right) =>
+  value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const separator = line.indexOf("|");
+      return {
+        [left]: (separator < 0 ? line : line.slice(0, separator)).trim(),
+        [right]: separator < 0 ? "" : line.slice(separator + 1).trim(),
+      };
+    });
 
 export default function CompanyEditor() {
   const [form, setForm] = useState(initial);
@@ -17,23 +49,37 @@ export default function CompanyEditor() {
   const [notice, setNotice] = useState("");
 
   useEffect(() => {
-    publicContentApi.company().then((content) => {
-      if (!content) return;
-      setForm({
-        name: content.name || "TechZen",
-        descriptor: content.descriptor || "",
-        email: content.email || "",
-        phone: content.phone || "",
-        location: content.location || "",
-        hours: content.hours || "",
-        introduction: content.introduction || "",
-        about: content.about || "",
-        mission: content.mission || "",
-        vision: content.vision || "",
-        whyChooseUs: toLines(content.whyChooseUs, "title", "description"),
-        statistics: toLines(content.statistics, "label", "value"),
-      });
-    }).catch((requestError) => setError(requestError.response?.data?.message || "Company content could not be loaded."))
+    publicContentApi
+      .company()
+      .then((content) => {
+        if (!content) return;
+        setForm({
+          name: content.name || "TechZen",
+          descriptor: content.descriptor || "",
+          email: content.email || "",
+          phone: content.phone || "",
+          location: content.location || "",
+          hours: content.hours || "",
+          linkedin: content.linkedin || "",
+          facebook: content.facebook || "",
+          whatsapp: content.whatsapp || "",
+          instagram: content.instagram || "",
+          github: content.github || "",
+          twitter: content.twitter || "",
+          introduction: content.introduction || "",
+          about: content.about || "",
+          mission: content.mission || "",
+          vision: content.vision || "",
+          whyChooseUs: toLines(content.whyChooseUs, "title", "description"),
+          statistics: toLines(content.statistics, "label", "value"),
+        });
+      })
+      .catch((requestError) =>
+        setError(
+          requestError.response?.data?.message ||
+            "Company content could not be loaded."
+        )
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -50,6 +96,12 @@ export default function CompanyEditor() {
         phone: form.phone,
         location: form.location,
         hours: form.hours,
+        linkedin: form.linkedin,
+        facebook: form.facebook,
+        whatsapp: form.whatsapp,
+        instagram: form.instagram,
+        github: form.github,
+        twitter: form.twitter,
         introduction: form.introduction,
         about: form.about,
         mission: form.mission,
@@ -59,20 +111,174 @@ export default function CompanyEditor() {
       });
       setNotice("Company content saved.");
     } catch (requestError) {
-      setError(requestError.response?.data?.message || "Company content could not be saved.");
-    } finally { setSaving(false); }
+      setError(
+        requestError.response?.data?.message ||
+          "Company content could not be saved."
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <section>
-      <header className={styles.pageHeader}><div><p className={styles.eyebrow}>WEBSITE CONTENT</p><h1>Company / About</h1><p>Edit shared company content used by public pages.</p></div></header>
-      {error && <p className={styles.error} role="alert">{error}</p>}
-      {notice && <p className={styles.notice} role="status">{notice}</p>}
-      {loading ? <div className={styles.loading}>Loading company content...</div> : <form className={styles.companyForm} onSubmit={save}>
-        {["name", "descriptor", "email", "phone", "location", "hours"].map((name) => <label className={styles.field} key={name}><span>{name[0].toUpperCase() + name.slice(1)}</span><input type={name === "email" ? "email" : name === "phone" ? "tel" : "text"} value={form[name]} onChange={(event) => setForm((current) => ({ ...current, [name]: event.target.value }))} /></label>)}
-        {[["introduction", "Company introduction"], ["about", "About"], ["mission", "Mission"], ["vision", "Vision"], ["whyChooseUs", "Why choose us (one title | description per line)"], ["statistics", "Statistics (one label | value per line)"]].map(([name, label]) => <label className={styles.field} key={name}><span>{label}</span><textarea rows={name === "about" || name === "whyChooseUs" || name === "statistics" ? 5 : 3} value={form[name]} onChange={(event) => setForm((current) => ({ ...current, [name]: event.target.value }))} /></label>)}
-        <button className={styles.primaryButton} type="submit" disabled={saving}>{saving ? "Saving..." : "Save company content"}</button>
-      </form>}
+      <header className={styles.pageHeader}>
+        <div>
+          <p className={styles.eyebrow}>WEBSITE CONTENT</p>
+          <h1>Company / About</h1>
+          <p>Edit shared company content used by public pages.</p>
+        </div>
+      </header>
+
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
+      {notice && (
+        <p className={styles.notice} role="status">
+          {notice}
+        </p>
+      )}
+
+      {loading ? (
+        <div className={styles.loading}>Loading company content...</div>
+      ) : (
+        <form className={styles.companyForm} onSubmit={save}>
+          {["name", "descriptor", "email", "phone", "location", "hours"].map(
+            (name) => (
+              <label className={styles.field} key={name}>
+                <span>{name[0].toUpperCase() + name.slice(1)}</span>
+                <input
+                  type={
+                    name === "email" ? "email" : name === "phone" ? "tel" : "text"
+                  }
+                  value={form[name]}
+                  onChange={(event) =>
+                    setForm((current) => ({
+                      ...current,
+                      [name]: event.target.value,
+                    }))
+                  }
+                />
+              </label>
+            )
+          )}
+
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              paddingTop: "14px",
+              paddingBottom: "4px",
+              borderTop: "1px solid #edf1ed",
+              marginTop: "4px",
+            }}
+          >
+            <strong
+              style={{
+                display: "block",
+                color: "#142a2b",
+                fontSize: "13px",
+                marginBottom: "3px",
+              }}
+            >
+              Social Media Links
+            </strong>
+            <small style={{ color: "#788780", fontSize: "11px" }}>
+              Dynamic social profiles displayed in the website footer.
+            </small>
+          </div>
+
+          {[
+            ["linkedin", "LinkedIn URL"],
+            ["facebook", "Facebook URL"],
+            ["whatsapp", "WhatsApp (Link or Phone)"],
+            ["instagram", "Instagram URL"],
+            ["github", "GitHub URL"],
+            ["twitter", "Twitter / X URL"],
+          ].map(([name, label]) => (
+            <label className={styles.field} key={name}>
+              <span>{label}</span>
+              <input
+                type="text"
+                placeholder={
+                  name === "whatsapp"
+                    ? "https://wa.me/919302039953"
+                    : `https://${name}.com/...`
+                }
+                value={form[name] || ""}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    [name]: event.target.value,
+                  }))
+                }
+              />
+            </label>
+          ))}
+
+          <div
+            style={{
+              gridColumn: "1 / -1",
+              paddingTop: "14px",
+              paddingBottom: "4px",
+              borderTop: "1px solid #edf1ed",
+              marginTop: "4px",
+            }}
+          >
+            <strong
+              style={{
+                display: "block",
+                color: "#142a2b",
+                fontSize: "13px",
+                marginBottom: "3px",
+              }}
+            >
+              Company Story &amp; Details
+            </strong>
+          </div>
+
+          {[
+            ["introduction", "Company introduction"],
+            ["about", "About"],
+            ["mission", "Mission"],
+            ["vision", "Vision"],
+            [
+              "whyChooseUs",
+              "Why choose us (one title | description per line)",
+            ],
+            ["statistics", "Statistics (one label | value per line)"],
+          ].map(([name, label]) => (
+            <label className={styles.field} key={name}>
+              <span>{label}</span>
+              <textarea
+                rows={
+                  name === "about" ||
+                  name === "whyChooseUs" ||
+                  name === "statistics"
+                    ? 5
+                    : 3
+                }
+                value={form[name]}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    [name]: event.target.value,
+                  }))
+                }
+              />
+            </label>
+          ))}
+
+          <button
+            className={styles.primaryButton}
+            type="submit"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save company content"}
+          </button>
+        </form>
+      )}
     </section>
   );
 }
