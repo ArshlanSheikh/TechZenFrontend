@@ -147,7 +147,19 @@ export default function CmsContentManager({ config }) {
                             event.target.value = "";
                           }
                         }} />
-                        {form[field.name] && <img className={styles.imagePreview} src={form[field.name]} alt="Content preview" />}
+                        {form[field.name] && (
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "6px" }}>
+                            <img className={styles.imagePreview} src={form[field.name]} alt="Content preview" />
+                            <button
+                              type="button"
+                              className={styles.secondaryButton}
+                              style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px" }}
+                              onClick={() => setForm((current) => ({ ...current, [field.name]: "" }))}
+                            >
+                              Remove image
+                            </button>
+                          </div>
+                        )}
                         {uploading && <small>Uploading image...</small>}
                       </>
                       : <input type={field.type === "list" ? "text" : field.type || "text"} min={field.type === "number" ? 0 : undefined} required={field.required} value={field.type === "list" && Array.isArray(form[field.name]) ? form[field.name].join(", ") : form[field.name] ?? ""} onChange={(event) => setForm((current) => ({ ...current, [field.name]: event.target.value }))} />}

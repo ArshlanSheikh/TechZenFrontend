@@ -1,348 +1,234 @@
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  ArrowUpRight,
-  BarChart3,
-  BriefcaseBusiness,
-  CheckCircle2,
-  Code2,
-  Megaphone,
-  ChevronLeft,
-  ChevronRight,
-  Globe2,
-  Smartphone,
-} from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 
 import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./Services.module.css";
 
-const icons = {
-  analytics: BarChart3,
-  business: BriefcaseBusiness,
-  code: Code2,
-  globe: Globe2,
-  marketing: Megaphone,
-  mobile: Smartphone,
-};
+function ServiceCard({ service, index, isHighlighted }) {
+  const [imgError, setImgError] = useState(false);
+  const cardId = `services-${service.slug || service.id || service._id}`;
+  const hasImage = Boolean(service.image && !imgError);
+
+  return (
+    <article
+      id={cardId}
+      className={`${styles.card} ${isHighlighted ? styles.highlighted : ""}`}
+      style={{
+        "--accent": service.color || "#2563eb",
+      }}
+    >
+      {/* Service Image / Graceful Fallback */}
+      <div className={styles.imageContainer}>
+        {hasImage ? (
+          <img
+            src={service.image}
+            alt={service.title}
+            className={styles.cardImage}
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className={styles.imageFallback}>
+            <div className={styles.fallbackPattern} />
+            <div
+              className={styles.fallbackAccentBlob}
+              style={{
+                background: `radial-gradient(circle, ${
+                  service.color || "#2563eb"
+                }30 0%, transparent 70%)`,
+              }}
+            />
+            <div className={styles.fallbackBadge}>
+              <span className={styles.fallbackTag}>SERVICE</span>
+              <span className={styles.fallbackTitle}>{service.title}</span>
+            </div>
+          </div>
+        )}
+
+        <span className={styles.orderBadge}>
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+
+      {/* Card Content */}
+      <div className={styles.cardBody}>
+        <h3 className={styles.cardTitle}>{service.title}</h3>
+
+        <p className={styles.cardDescription}>{service.description}</p>
+
+        {service.features && service.features.length > 0 && (
+          <div className={styles.featuresWrapper}>
+            <div className={styles.featuresList}>
+              {service.features.slice(0, 4).map((feature, fIndex) => (
+                <span key={fIndex} className={styles.featureChip}>
+                  <Check size={13} className={styles.featureCheck} />
+                  <span>{feature}</span>
+                </span>
+              ))}
+              {service.features.length > 4 && (
+                <span className={styles.moreFeatures}>
+                  +{service.features.length - 4} more
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className={styles.cardFooter}>
+          <a
+            href="/#contact"
+            className={styles.exploreLink}
+            onClick={(e) => {
+              const contactElem = document.getElementById("contact");
+              if (contactElem) {
+                e.preventDefault();
+                contactElem.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            <span>Explore Service</span>
+            <ArrowUpRight size={16} className={styles.exploreArrow} />
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default function Services() {
-  const { items: services, loading } = usePublicContent("services");
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const { items: services, loading, error } = usePublicContent("services");
+  const [highlightedId, setHighlightedId] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
-    const serviceId = location.hash.replace("#services-", "");
-    const serviceIndex = services.findIndex(
-      (service) => (service.slug || service.id || service._id) === serviceId
+    if (!location.hash || !location.hash.startsWith("#services-")) {
+      return;
+    }
+
+    const serviceKey = location.hash.replace("#services-", "");
+    const matchingService = services.find(
+      (s) => (s.slug || s.id || s._id) === serviceKey
     );
 
-    if (serviceIndex >= 0) {
-      setActive(serviceIndex);
-      setPaused(true);
+    if (matchingService) {
+      const elementId = `services-${matchingService.slug || matchingService.id || matchingService._id}`;
+      setHighlightedId(elementId);
 
-      window.requestAnimationFrame(() => {
-        document.getElementById("services")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
+      const scrollTimer = setTimeout(() => {
+        const el = document.getElementById(elementId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 150);
+
+      const unhighlightTimer = setTimeout(() => {
+        setHighlightedId(null);
+      }, 3000);
+
+      return () => {
+        clearTimeout(scrollTimer);
+        clearTimeout(unhighlightTimer);
+      };
     }
   }, [location.hash, services]);
 
-
-
-
-
-  /*
-    Automatically rotate every 2.2 seconds
-  */
-  useEffect(() => {
-    if (paused || loading || services.length === 0) return;
-
-    const interval = setInterval(() => {
-      setActive((current) => (current + 1) % services.length);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [paused, loading, services.length]);
-
   if (loading) {
-    return <section className={styles.services} id="services" aria-label="Services" />;
+    return (
+      <section className={styles.services} id="services" aria-label="Services">
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.headingBlock}>
+              <span className={styles.eyebrow}>WHAT WE DO</span>
+              <h2>
+                Solutions built for
+                <span> meaningful growth.</span>
+              </h2>
+            </div>
+            <p className={styles.sectionIntro}>
+              From strategy to execution, we help ambitious organizations solve
+              complex problems and turn opportunities into measurable results.
+            </p>
+          </div>
+          <div className={styles.servicesGrid}>
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <div key={item} className={styles.skeletonCard}>
+                <div className={styles.skeletonImage} />
+                <div className={styles.skeletonBody}>
+                  <div className={styles.skeletonTitle} />
+                  <div className={styles.skeletonText} />
+                  <div className={styles.skeletonTextShort} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
-  if (services.length === 0) return null;
-
-  /*
-    Move to previous card
-  */
-  const previous = () => {
-    setActive(
-      (current) =>
-        (current - 1 + services.length) % services.length
+  if (error) {
+    return (
+      <section className={styles.services} id="services" aria-label="Services">
+        <div className={styles.container}>
+          <div className={styles.errorState} role="alert">
+            <p>{error}</p>
+          </div>
+        </div>
+      </section>
     );
-  };
+  }
 
-  /*
-    Move to next card
-  */
-  const next = () => {
-    setActive(
-      (current) =>
-        (current + 1) % services.length
+  if (services.length === 0) {
+    return (
+      <section className={styles.services} id="services" aria-label="Services">
+        <div className={styles.container}>
+          <div className={styles.emptyState}>
+            <p>No services currently available.</p>
+          </div>
+        </div>
+      </section>
     );
-  };
-
-  /*
-    Calculate where each card should appear.
-
-    - center
-    - left-1
-    - left-2
-    - right-1
-    - right-2
-  */
-  const getPosition = (index) => {
-    let difference = index - active;
-    if (difference > services.length / 2) {
-      difference -= services.length;
-    }
-
-    if (difference < -services.length / 2) {
-      difference += services.length;
-    }
-
-    if (difference === 0) return "center";
-
-    if (difference === -1) return "leftOne";
-
-    if (difference === -2) return "leftTwo";
-
-    if (difference === 1) return "rightOne";
-
-    if (difference === 2) return "rightTwo";
-
-    return "hidden";
-  };
+  }
 
   return (
-    <section
-      className={styles.services}
-      id="services"
-    >
+    <section className={styles.services} id="services" aria-label="Services">
       <div className={styles.container}>
-
         {/* ================================
             SECTION HEADER
         ================================= */}
-
         <div className={styles.sectionHeader}>
-
           <div className={styles.headingBlock}>
-            <span className={styles.eyebrow}>
-              WHAT WE DO
-            </span>
-
+            <span className={styles.eyebrow}>WHAT WE DO</span>
             <h2>
               Solutions built for
               <span> meaningful growth.</span>
             </h2>
           </div>
 
-          {/* <p className={styles.sectionIntro}>
-            From strategy to execution, we help ambitious
-            organizations solve complex problems and turn
-            opportunities into measurable results.
-          </p> */}
-
+          <p className={styles.sectionIntro}>
+            From strategy to execution, we help ambitious organizations solve
+            complex problems and turn opportunities into measurable results.
+          </p>
         </div>
-
 
         {/* ================================
-            3D CAROUSEL
+            RESPONSIVE SERVICES GRID
         ================================= */}
-
-        <div
-          className={styles.stage}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-
-          {/* Background glow */}
-          <div className={styles.glow} />
-
-          {/* Decorative rings */}
-          <div className={styles.ring } />
-          <div className={styles.ring} />
-          <div className={styles.ring } />
-
-
-          <div className={styles.carousel}>
-
-            {services.map((service, index) => {
-              const Icon = icons[service.icon] || BriefcaseBusiness;
-
-              const position = getPosition(index);
-
-              return (
-                <article
-                  id={`services-${service.slug || service.id || service._id}`}
-                  key={service._id || service.slug || service.title}
-                  className={`${styles.card} ${
-                    styles[position]
-                  }`}
-                  style={{
-                    "--accent": service.color,
-                  }}
-                  onClick={() => setActive(index)}
-                >
-
-                  {/* Card top */}
-
-                  <div className={styles.cardTop}>
-
-                    <div className={styles.iconBox}>
-                      <Icon
-                        size={24}
-                        strokeWidth={1.8}
-                      />
-                    </div>
-
-                    <span className={styles.cardNumber}>
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-
-                  </div>
-
-
-                  {/* Card content */}
-
-                  <div className={styles.cardContent}>
-
-                    <h3>
-                      {service.title}
-                    </h3>
-
-                    <p>
-                      {service.description}
-                    </p>
-
-
-                    <div className={styles.features}>
-
-                      {service.features.map(
-                        (feature) => (
-                          <span key={feature}>
-                            <CheckCircle2
-                              size={14}
-                            />
-
-                            {feature}
-                          </span>
-                        )
-                      )}
-
-                    </div>
-
-                  </div>
-
-
-                  {/* Card bottom */}
-
-                  <div className={styles.cardBottom}>
-
-                    <span>
-                      Explore service
-                    </span>
-
-                    <div className={styles.arrow}>
-                      <ArrowUpRight size={18} />
-                    </div>
-
-                  </div>
-
-                </article>
-              );
-            })}
-
-          </div>
-
-
-          {/* ================================
-              ARROWS
-          ================================= */}
-
-          <button
-            className={`${styles.carouselButton} ${styles.previousButton}`}
-            onClick={previous}
-            aria-label="Previous service"
-          >
-            <ChevronLeft size={20} />
-          </button>
-
-          <button
-            className={`${styles.carouselButton} ${styles.nextButton}`}
-            onClick={next}
-            aria-label="Next service"
-          >
-            <ChevronRight size={20} />
-          </button>
-
+        <div className={styles.servicesGrid}>
+          {services.map((service, index) => (
+            <ServiceCard
+              key={service._id || service.slug || index}
+              service={service}
+              index={index}
+              isHighlighted={
+                highlightedId ===
+                `services-${service.slug || service.id || service._id}`
+              }
+            />
+          ))}
         </div>
-
-
-        {/* ================================
-            CONTROLS
-        ================================= */}
-
-        <div className={styles.controls}>
-
-          <div className={styles.counter}>
-
-            <span className={styles.currentNumber}>
-              {String(active + 1).padStart(2, "0")}
-            </span>
-
-            <div className={styles.progress}>
-              <span
-                style={{
-                  width: `${
-                    ((active + 1) /
-                      services.length) *
-                    100
-                  }%`,
-                }}
-              />
-            </div>
-
-            <span className={styles.totalNumber}>
-              {String(services.length).padStart(2, "0")}
-            </span>
-
-          </div>
-
-
-          <div className={styles.currentService}>
-            {services[active].title}
-          </div>
-
-
-          <button
-            className={styles.pauseButton}
-            onClick={() =>
-              setPaused((value) => !value)
-            }
-          >
-            {paused
-              ? "Resume rotation"
-              : "Pause rotation"}
-          </button>
-
-        </div>
-
       </div>
     </section>
   );
 }
-
