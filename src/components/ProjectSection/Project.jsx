@@ -29,9 +29,13 @@ export default function Project() {
           </p>
         </div>
 
-        {loading && <p role="status">Loading projects...</p>}
-        {error && <p role="alert">{error}</p>}
-        {!loading && !error && projects.length === 0 && <p>No projects to display right now.</p>}
+        {projects.length === 0 && loading && (
+          <p role="status">Loading projects...</p>
+        )}
+        {projects.length === 0 && error && <p role="alert">{error}</p>}
+        {projects.length === 0 && !loading && !error && (
+          <p>No projects to display right now.</p>
+        )}
         <div className={styles.projectsList}>
           {projects.map((project, index) => (
             <article

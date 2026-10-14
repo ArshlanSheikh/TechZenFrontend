@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { publicContentApi } from "../../Api/CmsApi";
+import useCompanyContent from "../../hooks/useCompanyContent";
 import styles from "./About.module.css";
 
 const defaultValues = [
@@ -10,11 +9,7 @@ const defaultValues = [
 ];
 
 export default function About() {
-  const [content, setContent] = useState(null);
-
-  useEffect(() => {
-    publicContentApi.company().then(setContent).catch(() => {});
-  }, []);
+  const { company: content } = useCompanyContent();
 
   const values = content?.whyChooseUs?.length
     ? content.whyChooseUs.map((item, index) => [String(index + 1).padStart(2, "0"), item.title, item.description])

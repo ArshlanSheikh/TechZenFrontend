@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Mail,
@@ -17,36 +16,15 @@ import {
 } from "react-icons/fa6";
 
 import { company as fallbackCompany } from "../../data/siteData";
-import { publicContentApi } from "../../Api/CmsApi";
+import useCompanyContent from "../../hooks/useCompanyContent";
 import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
   const year = new Date().getFullYear();
-  const [managedCompany, setManagedCompany] = useState(null);
+  const { company: companyInfo, isFallback } = useCompanyContent();
   const { items: dynamicServices } = usePublicContent("services");
   const location = useLocation();
-
-  useEffect(() => {
-    let isMounted = true;
-    publicContentApi
-      .company()
-      .then((data) => {
-        if (isMounted && data) {
-          setManagedCompany(data);
-        }
-      })
-      .catch(() => {});
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  // Use fallbackCompany while managedCompany has not loaded
-  const companyInfo = managedCompany
-    ? { ...fallbackCompany, ...managedCompany }
-    : fallbackCompany;
 
   const cleanPhone = companyInfo.phone
     ? companyInfo.phone.replace(/[^0-9]/g, "")
@@ -59,23 +37,23 @@ export default function Footer() {
    * - If a platform URL in the backend is empty or missing: handle safely.
    */
   const resolveSocialUrl = (key, fallbackUrl) => {
-    if (managedCompany) {
-      const val = managedCompany[key];
+    if (!isFallback) {
+      const val = companyInfo[key];
       return typeof val === "string" ? val.trim() : "";
     }
     return (fallbackUrl || "").trim();
   };
 
   const resolveWhatsAppUrl = (fallbackUrl) => {
-    if (managedCompany) {
-      if (managedCompany.whatsapp && managedCompany.whatsapp.trim()) {
-        const raw = managedCompany.whatsapp.trim();
+    if (!isFallback) {
+      if (companyInfo.whatsapp && companyInfo.whatsapp.trim()) {
+        const raw = companyInfo.whatsapp.trim();
         return raw.startsWith("http")
           ? raw
           : `https://wa.me/${raw.replace(/[^0-9]/g, "")}`;
       }
-      if (managedCompany.phone && managedCompany.phone.trim()) {
-        const digits = managedCompany.phone.replace(/[^0-9]/g, "");
+      if (companyInfo.phone && companyInfo.phone.trim()) {
+        const digits = companyInfo.phone.replace(/[^0-9]/g, "");
         return `https://wa.me/${digits.length === 10 ? "91" + digits : digits}`;
       }
       return "";

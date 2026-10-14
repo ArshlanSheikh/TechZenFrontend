@@ -1,9 +1,12 @@
 import { ArrowRight, Check, Code2, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tranings } from "../../data/siteData";
+import usePublicContent from "../../hooks/usePublicContent";
 import styles from "./TrainingSection.module.css";
 
 export default function TrainingSection() {
+  const { items: trainings } = usePublicContent("trainings", Tranings);
+
   return (
     <section className={styles.section} id="trainings">
       <div className={styles.container}>
@@ -22,7 +25,7 @@ export default function TrainingSection() {
         </div>
 
         <div className={styles.trainingGrid}>
-          {Tranings.map((training, index) => {
+          {trainings.map((training, index) => {
             const Icon = training.icon === "code" ? Code2 : GraduationCap;
 
             return (

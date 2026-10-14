@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { company, Tranings } from "../../data/siteData";
 import styles from "./Navbar.module.css";
 import usePublicContent from "../../hooks/usePublicContent";
+import useCompanyContent from "../../hooks/useCompanyContent";
 
 
 
@@ -27,6 +28,8 @@ import {
 export default function Navbar() {
   const { items: projects } = usePublicContent("projects");
   const { items: services } = usePublicContent("services");
+  const { items: trainings } = usePublicContent("trainings", Tranings);
+  const { company: companyInfo } = useCompanyContent();
 
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -135,7 +138,7 @@ export default function Navbar() {
 
               <NavbarDropdown
                 title="Trainings"
-                items={Tranings}
+                items={trainings}
                 viewAllLink="/#trainings"
               />
 
@@ -258,7 +261,7 @@ export default function Navbar() {
 
             <NavbarDropdownMobileView
               title="Trainings"
-              items={Tranings}
+              items={trainings}
               isOpen={mobileTrainingsOpen}
               onToggle={() =>
                 setMobileTrainingsOpen(
@@ -316,7 +319,7 @@ export default function Navbar() {
 
           <div className={styles.sidebarFooter}>
             <span>© {new Date().getFullYear()}</span>
-            <span>{company.name}</span>
+            <span>{companyInfo.name || company.name}</span>
           </div>
 
         </div>

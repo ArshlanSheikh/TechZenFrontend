@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { company } from "../../data/siteData";
 import usePublicContent from "../../hooks/usePublicContent";
-import { publicContentApi } from "../../Api/CmsApi";
+import useCompanyContent from "../../hooks/useCompanyContent";
 import styles from "./Contact.module.css";
 import api from "../../Api/ApiIntersceptor";
 
@@ -20,12 +19,7 @@ const initial = {
 export default function Contact() {
   const { items: managedServices } = usePublicContent("services");
   const serviceOptions = managedServices.map((service) => service.title);
-  const [managedCompany, setManagedCompany] = useState(null);
-  const companyInfo = { ...company, ...managedCompany };
-
-  useEffect(() => {
-    publicContentApi.company().then(setManagedCompany).catch(() => {});
-  }, []);
+  const { company: companyInfo } = useCompanyContent();
 
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});

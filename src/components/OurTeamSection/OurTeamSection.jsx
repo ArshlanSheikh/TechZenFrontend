@@ -34,10 +34,16 @@ const OurTeam = () => {
           <div className={styles.track}>
             {sliderData.map((member, index) => (
               <div
-                key={`${member._id}-${index}`}
+                key={`${member._id || member.id || member.name}-${index}`}
                 className={styles.card}
               >
-                {member.image ? <img src={member.image} alt={member.name} className={styles.image} loading="lazy" /> : <div className={styles.image} aria-label={member.name}>{member.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2)}</div>}
+                {member.image ? (
+                  <img src={member.image} alt={member.name} className={styles.image} loading="lazy" />
+                ) : (
+                  <div className={styles.image} aria-label={member.name}>
+                    {(member.name || "TZ").split(/\s+/).map((part) => part[0]).join("").slice(0, 2)}
+                  </div>
+                )}
 
                 <h3>{member.name}</h3>
 

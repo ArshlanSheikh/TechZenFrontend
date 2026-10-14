@@ -133,53 +133,53 @@ export default function Services() {
     }
   }, [location.hash, services]);
 
-  if (loading) {
-    return (
-      <section className={styles.services} id="services" aria-label="Services">
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <div className={styles.headingBlock}>
-              <span className={styles.eyebrow}>WHAT WE DO</span>
-              <h2>
-                Solutions built for
-                <span> meaningful growth.</span>
-              </h2>
-            </div>
-            <p className={styles.sectionIntro}>
-              From strategy to execution, we help ambitious organizations solve
-              complex problems and turn opportunities into measurable results.
-            </p>
-          </div>
-          <div className={styles.servicesGrid}>
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div key={item} className={styles.skeletonCard}>
-                <div className={styles.skeletonImage} />
-                <div className={styles.skeletonBody}>
-                  <div className={styles.skeletonTitle} />
-                  <div className={styles.skeletonText} />
-                  <div className={styles.skeletonTextShort} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className={styles.services} id="services" aria-label="Services">
-        <div className={styles.container}>
-          <div className={styles.errorState} role="alert">
-            <p>{error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   if (services.length === 0) {
+    if (loading) {
+      return (
+        <section className={styles.services} id="services" aria-label="Services">
+          <div className={styles.container}>
+            <div className={styles.sectionHeader}>
+              <div className={styles.headingBlock}>
+                <span className={styles.eyebrow}>WHAT WE DO</span>
+                <h2>
+                  Solutions built for
+                  <span> meaningful growth.</span>
+                </h2>
+              </div>
+              <p className={styles.sectionIntro}>
+                From strategy to execution, we help ambitious organizations solve
+                complex problems and turn opportunities into measurable results.
+              </p>
+            </div>
+            <div className={styles.servicesGrid}>
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <div key={item} className={styles.skeletonCard}>
+                  <div className={styles.skeletonImage} />
+                  <div className={styles.skeletonBody}>
+                    <div className={styles.skeletonTitle} />
+                    <div className={styles.skeletonText} />
+                    <div className={styles.skeletonTextShort} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    if (error) {
+      return (
+        <section className={styles.services} id="services" aria-label="Services">
+          <div className={styles.container}>
+            <div className={styles.errorState} role="alert">
+              <p>{error}</p>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section className={styles.services} id="services" aria-label="Services">
         <div className={styles.container}>

@@ -35,7 +35,10 @@ export default function FAQ() {
 
           {/* FAQ LIST */}
           <div className={styles.faqList}>
-            {loading ? <p>Loading questions...</p> : faqs.map((faq, i) => {
+            {faqs.length === 0 && loading ? (
+              <p>Loading questions...</p>
+            ) : (
+              faqs.map((faq, i) => {
               const isOpen = open === i;
 
               return (
@@ -71,7 +74,7 @@ export default function FAQ() {
                   </div>
                 </div>
               );
-            })}
+            }))}
           </div>
         </div>
       </div>
