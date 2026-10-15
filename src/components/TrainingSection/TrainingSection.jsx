@@ -1,4 +1,13 @@
-import { ArrowRight, Check, Code2, GraduationCap } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  Calendar,
+  Check,
+  Clock,
+  Code2,
+  GraduationCap,
+  MapPin,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tranings } from "../../data/siteData";
 import usePublicContent from "../../hooks/usePublicContent";
@@ -27,6 +36,20 @@ export default function TrainingSection() {
         <div className={styles.trainingGrid}>
           {trainings.map((training, index) => {
             const Icon = training.icon === "code" ? Code2 : GraduationCap;
+            const bullets =
+              Array.isArray(training.features) && training.features.length > 0
+                ? training.features
+                : Array.isArray(training.whatStudentsWillLearn) &&
+                  training.whatStudentsWillLearn.length > 0
+                ? training.whatStudentsWillLearn
+                : [];
+
+            const categoryName =
+              (typeof training.category === "object"
+                ? training.category?.name
+                : training.category) ||
+              training.categoryName ||
+              "";
 
             return (
               <article
@@ -36,28 +59,121 @@ export default function TrainingSection() {
                 style={{ "--training-accent": training.color || "#2563eb" }}
               >
                 <div className={styles.cardTop}>
-                  <span className={styles.programNumber}>
-                    PROGRAM {String(index + 1).padStart(2, "0")}
-                  </span>
+                  <div className={styles.cardTopLeft}>
+                    <span className={styles.programNumber}>
+                      PROGRAM {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {categoryName && (
+                      <span className={styles.categoryBadge}>
+                        {categoryName}
+                      </span>
+                    )}
+                  </div>
                   <span className={styles.iconBox}>
                     <Icon size={22} strokeWidth={1.8} />
                   </span>
                 </div>
 
-                <h3>{training.title}</h3>
-                <p className={styles.description}>{training.description}</p>
+                {training.image && (
+                  <div className={styles.imageWrapper}>
+                    <img
+                      src={training.image}
+                      alt={training.title}
+                      className={styles.cardImage}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.parentElement.style.display = "none";
+                      }}
+                    />
+                  </div>
+                )}
 
-                <ul className={styles.features}>
-                  {training.features.map((feature) => (
-                    <li key={feature}>
-                      <Check size={15} aria-hidden="true" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <h3>
+                  <Link
+                    to={`/trainings/${training.slug || training.id || training._id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {training.title}
+                  </Link>
+                </h3>
+                <p className={styles.description}>
+                  {training.shortDescription || training.description}
+                </p>
 
-                <Link className={styles.contactLink} to="/#contact">
-                  Ask about this program
+                {(training.duration ||
+                  training.mode ||
+                  training.certificate ||
+                  training.batchStartDate ||
+                  training.fee) && (
+                  <div className={styles.metaRow}>
+                    {training.duration && (
+                      <span className={styles.metaPill}>
+                        <Clock size={12} strokeWidth={2} />
+                        <span>{training.duration}</span>
+                      </span>
+                    )}
+                    {training.mode && (
+                      <span className={styles.metaPill}>
+                        <MapPin size={12} strokeWidth={2} />
+                        <span>{training.mode}</span>
+                      </span>
+                    )}
+                    {training.certificate && (
+                      <span className={styles.metaPill}>
+                        <Award size={12} strokeWidth={2} />
+                        <span>Certificate</span>
+                      </span>
+                    )}
+                    {training.batchStartDate && (
+                      <span className={styles.metaPill}>
+                        <Calendar size={12} strokeWidth={2} />
+                        <span>{training.batchStartDate}</span>
+                      </span>
+                    )}
+                    {training.fee && (
+                      <span className={styles.feePill}>{training.fee}</span>
+                    )}
+                  </div>
+                )}
+
+                {training.eligibility && (
+                  <p className={styles.eligibility}>
+                    <strong>Eligibility:</strong> {training.eligibility}
+                  </p>
+                )}
+
+                {bullets.length > 0 && (
+                  <ul className={styles.features}>
+                    {bullets.map((feature) => (
+                      <li key={feature}>
+                        <Check size={15} aria-hidden="true" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {Array.isArray(training.technologies) &&
+                  training.technologies.length > 0 && (
+                    <div className={styles.techTags}>
+                      {training.technologies.slice(0, 6).map((tech) => (
+                        <span key={tech} className={styles.techTag}>
+                          {tech}
+                        </span>
+                      ))}
+                      {training.technologies.length > 6 && (
+                        <span className={styles.techTag}>
+                          +{training.technologies.length - 6} more
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                <Link
+                  className={styles.contactLink}
+                  to={`/trainings/${training.slug || training.id || training._id}`}
+                >
+                  View Program Details
                   <ArrowRight size={16} />
                 </Link>
               </article>

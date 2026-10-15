@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BriefcaseBusiness, Building2, ChevronLeft, CircleHelp, Gauge, Inbox, Layers3, Menu, Settings, Users } from "lucide-react";
+import { BriefcaseBusiness, Building2, ChevronLeft, CircleHelp, Gauge, GraduationCap, Inbox, Layers3, Menu, Settings, Users } from "lucide-react";
 import styles from "./AdminSidebar.module.css";
 
 const modules = [
@@ -9,6 +9,7 @@ const modules = [
   { to: "/admin/projects", label: "Projects", icon: BriefcaseBusiness },
   { to: "/admin/team", label: "Our team", icon: Users },
   { to: "/admin/services", label: "Services", icon: Layers3 },
+  { to: "/admin/trainings", label: "Trainings", icon: GraduationCap },
   { to: "/admin/faqs", label: "FAQ", icon: CircleHelp },
   { to: "/admin/company", label: "Company", icon: Building2 },
   { to: "/admin/settings", label: "Settings", icon: Settings },

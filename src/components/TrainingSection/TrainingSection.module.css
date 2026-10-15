@@ -74,6 +74,44 @@
   margin-bottom: 25px;
 }
 
+.cardTopLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categoryBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--training-accent) 10%, white);
+  color: var(--training-accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: #f1f5f9;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.trainingCard:hover .cardImage {
+  transform: scale(1.03);
+}
+
 .programNumber {
   color: #64748b;
   font-size: 10px;
@@ -96,6 +134,71 @@
   color: #0f172a;
   font-size: 27px;
   line-height: 1.2;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 8px;
+}
+
+.metaPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.metaPill svg {
+  color: var(--training-accent);
+}
+
+.feePill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 4px;
+  background: #ecfdf5;
+  color: #065f46;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.eligibility {
+  margin: 12px 0 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.eligibility strong {
+  color: #334155;
+  font-weight: 600;
+}
+
+.techTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 4px;
+}
+
+.techTag {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 500;
 }
 
 .description {

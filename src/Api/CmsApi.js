@@ -52,3 +52,22 @@ export const inquiriesApi = {
   update: async (id, payload) => (await api.put(`/v1/inquiry/update/${id}`, payload)).data?.data,
   remove: async (id) => (await api.delete(`/v1/inquiry/delete/${id}`)).data?.data,
 };
+
+export const trainingApi = {
+  list: async () => (await api.get("/v1/trainings/admin/all")).data?.data || [],
+  listPublic: async (category) => {
+    const url = category ? `/v1/trainings?category=${encodeURIComponent(category)}` : "/v1/trainings";
+    return (await api.get(url)).data?.data || [];
+  },
+  getGrouped: async () => (await api.get("/v1/trainings/grouped")).data?.data || [],
+  getBySlugOrId: async (idOrSlug) => (await api.get(`/v1/trainings/${idOrSlug}`)).data?.data || null,
+  create: async (payload) => (await api.post("/v1/trainings", payload)).data?.data,
+  update: async (id, payload) => (await api.put(`/v1/trainings/${id}`, payload)).data?.data,
+  remove: async (id) => (await api.delete(`/v1/trainings/${id}`)).data?.data,
+
+  listCategories: async () => (await api.get("/v1/training-categories")).data?.data || [],
+  listCategoriesAdmin: async () => (await api.get("/v1/training-categories/admin/all")).data?.data || [],
+  createCategory: async (payload) => (await api.post("/v1/training-categories", payload)).data?.data,
+  updateCategory: async (id, payload) => (await api.put(`/v1/training-categories/${id}`, payload)).data?.data,
+  removeCategory: async (id) => (await api.delete(`/v1/training-categories/${id}`)).data?.data,
+};

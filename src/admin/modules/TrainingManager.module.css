@@ -1,0 +1,300 @@
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #dbe4df;
+  padding-bottom: 10px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #4b6358;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #f0f4f1;
+  color: #145f51;
+}
+
+.tab.active {
+  background: #145f51;
+  color: #ffffff;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categorySelect {
+  min-height: 39px;
+  padding: 0 12px;
+  border: 1px solid #dbe4df;
+  border-radius: 2px;
+  background: #ffffff;
+  color: #142a2b;
+  font-size: 12px;
+  outline-color: #16806c;
+}
+
+.thumbnailCell {
+  width: 48px;
+  height: 38px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #eef2f0;
+  border: 1px solid #e1e8e3;
+}
+
+.placeholderThumb {
+  width: 48px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: #e8f3ee;
+  color: #16806c;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.priceTag {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.originalPrice {
+  color: #82908b;
+  text-decoration: line-through;
+  font-size: 11px;
+}
+
+.discountedPrice {
+  color: #145f51;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.pricingType {
+  color: #82908b;
+  font-size: 10px;
+}
+
+/* Modal Form Styles */
+.modalLarge {
+  width: min(860px, 96vw);
+  max-height: min(90vh, 900px);
+  overflow-y: auto;
+  border: 1px solid #dbe4df;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(20, 42, 43, 0.25);
+}
+
+.formSection {
+  margin-bottom: 24px;
+  padding: 18px;
+  border: 1px solid #e8eeea;
+  border-radius: 6px;
+  background: #fbfdfc;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8eeea;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  color: #142a2b;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.sectionHeader p {
+  margin: 2px 0 0;
+  color: #647575;
+  font-size: 11px;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* Repeatable items */
+.repeatableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addInputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.addInputRow input,
+.addInputRow textarea {
+  flex: 1;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #dbe4df;
+  border-radius: 3px;
+  font: inherit;
+  font-size: 12px;
+}
+
+.addItemButton {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 1px solid #145f51;
+  border-radius: 3px;
+  background: #145f51;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addItemButton:hover {
+  background: #0f483d;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid #e2ece6;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.itemRow input,
+.itemRow textarea {
+  flex: 1;
+  border: 1px solid transparent;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: 12px;
+  color: #142a2b;
+  border-radius: 2px;
+}
+
+.itemRow input:focus,
+.itemRow textarea:focus {
+  border-color: #16806c;
+  outline: none;
+  background: #f7faf8;
+}
+
+.itemRemoveButton {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f1d5cf;
+  border-radius: 3px;
+  background: #fff;
+  color: #b91c1c;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.itemRemoveButton:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+/* Syllabus Section */
+.syllabusModule {
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #d5e2dc;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.moduleTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.moduleTop input {
+  flex: 1;
+  font-weight: 650;
+}
+
+/* FAQ Item */
+.faqItemRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #e2ece6;
+  border-radius: 4px;
+  background: #fff;
+  margin-bottom: 8px;
+}
+
+.faqHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faqHeader span {
+  font-weight: 600;
+  font-size: 11px;
+  color: #145f51;
+}
+
+@media (max-width: 650px) {
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+  .addInputRow {
+    flex-direction: column;
+  }
+}

@@ -11,6 +11,7 @@ const metrics = [
   ["Total projects", (data) => data.projects.total],
   ["Team members", (data) => data.teamMembers],
   ["Active services", (data) => data.services],
+  ["Active trainings", (data) => data.trainings ?? 0],
   ["Active FAQs", (data) => data.faqs],
 ];
 
@@ -43,7 +44,7 @@ export default function AdminOverview() {
           </section>
           <section className={styles.overviewPanel}>
             <header><h2>Recent projects</h2></header>
-            {overview.projects.recent.length ? overview.projects.recent.map((item) => <Link className={styles.recentRow} key={item._id} to="/admin/projects"><span>{item.title}</span><span>{item.category || "Project"}</span></Link>) : <p className={styles.loading}>No published projects yet.</p>}
+            {overview.projects.recent.length ? overview.projects.recent.map((item) => <Link className={styles.recentRow} key={item._id} to="/admin/projects"><span>{item.title}</span><span>{(typeof item.category === "object" ? item.category?.name : item.category) || "Project"}</span></Link>) : <p className={styles.loading}>No published projects yet.</p>}
           </section>
         </div>
       </>}

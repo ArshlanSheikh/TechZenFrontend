@@ -30,7 +30,7 @@
 .formGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
 .field { min-width: 0; display: flex; flex-direction: column; gap: 6px; color: #344d45; font-size: 11px; font-weight: 650; }
 .field:has(textarea), .field:has(small) { grid-column: 1 / -1; }
-.field input:not([type="checkbox"]), .field textarea { width: 100%; box-sizing: border-box; min-height: 38px; padding: 9px 10px; border: 1px solid #dbe4df; border-radius: 2px; background: #fff; color: #142a2b; font: inherit; font-weight: 400; outline-color: #16806c; }
+.field input:not([type="checkbox"]), .field textarea, .field select { width: 100%; box-sizing: border-box; min-height: 38px; padding: 9px 10px; border: 1px solid #dbe4df; border-radius: 2px; background: #fff; color: #142a2b; font: inherit; font-size: 12px; font-weight: 400; outline-color: #16806c; }
 .field input[type="color"] { width: 100%; height: 38px; padding: 3px; }
 .field textarea { resize: vertical; line-height: 1.5; }
 .field small { color: #82908b; font-size: 10px; font-weight: 400; }

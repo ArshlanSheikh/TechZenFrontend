@@ -3,7 +3,14 @@ import { Pencil, Plus, Search, Trash2, X } from "lucide-react";
 import { contentApi, uploadImage } from "../../Api/CmsApi";
 import styles from "./AdminPages.module.css";
 
-const emptyForm = (config) => Object.fromEntries(config.fields.map(({ name }) => [name, config.defaults?.[name] ?? (name === "technologies" || name === "features" ? [] : "")]));
+const emptyForm = (config) =>
+  Object.fromEntries(
+    config.fields.map((field) => [
+      field.name,
+      config.defaults?.[field.name] ??
+        (field.type === "list" ? [] : field.type === "checkbox" ? false : ""),
+    ])
+  );
 
 export default function CmsContentManager({ config }) {
   const api = useMemo(() => contentApi(config.api), [config.api]);
@@ -38,7 +45,16 @@ export default function CmsContentManager({ config }) {
   const openEdit = (item) => {
     setEditing(item._id);
     setFormOpen(true);
-    setForm(Object.fromEntries(config.fields.map(({ name }) => [name, item[name] ?? config.defaults?.[name] ?? (name === "features" || name === "technologies" ? [] : "")])));
+    setForm(
+      Object.fromEntries(
+        config.fields.map((field) => [
+          field.name,
+          item[field.name] ??
+            config.defaults?.[field.name] ??
+            (field.type === "list" ? [] : field.type === "checkbox" ? false : ""),
+        ])
+      )
+    );
     setError("");
     setNotice("");
   };
@@ -130,31 +146,73 @@ export default function CmsContentManager({ config }) {
                 {config.fields.map((field) => <label key={field.name} className={`${styles.field} ${field.type === "checkbox" ? styles.checkField : ""}`}>
                   {field.type === "checkbox" ? <><input type="checkbox" checked={Boolean(form[field.name])} onChange={(event) => setForm((current) => ({ ...current, [field.name]: event.target.checked }))} /><span>{field.label}</span></> : <>
                     <span>{field.label}{field.required && " *"}</span>
-                    {field.type === "textarea" ? <textarea rows={field.rows || 3} required={field.required} value={form[field.name] || ""} onChange={(event) => setForm((current) => ({ ...current, [field.name]: event.target.value }))} />
-                      : field.type === "image" ? <>
-                        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={async (event) => {
-                          const file = event.target.files?.[0];
-                          if (!file) return;
-                          setUploading(true);
-                          setError("");
-                          try {
-                            const imageUrl = await uploadImage(file);
-                            setForm((current) => ({ ...current, [field.name]: imageUrl }));
-                          } catch (uploadError) {
-                            setError(uploadError.response?.data?.message || "Image upload failed.");
-                          } finally {
-                            setUploading(false);
-                            event.target.value = "";
-                          }
-                        }} />
+                    {field.type === "textarea" ? (
+                      <textarea
+                        rows={field.rows || 3}
+                        required={field.required}
+                        value={form[field.name] || ""}
+                        onChange={(event) =>
+                          setForm((current) => ({
+                            ...current,
+                            [field.name]: event.target.value,
+                          }))
+                        }
+                      />
+                    ) : field.type === "image" ? (
+                      <>
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif"
+                          onChange={async (event) => {
+                            const file = event.target.files?.[0];
+                            if (!file) return;
+                            setUploading(true);
+                            setError("");
+                            try {
+                              const imageUrl = await uploadImage(file);
+                              setForm((current) => ({
+                                ...current,
+                                [field.name]: imageUrl,
+                              }));
+                            } catch (uploadError) {
+                              setError(
+                                uploadError.response?.data?.message ||
+                                  "Image upload failed."
+                              );
+                            } finally {
+                              setUploading(false);
+                              event.target.value = "";
+                            }
+                          }}
+                        />
                         {form[field.name] && (
-                          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "6px" }}>
-                            <img className={styles.imagePreview} src={form[field.name]} alt="Content preview" />
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "10px",
+                              marginTop: "6px",
+                            }}
+                          >
+                            <img
+                              className={styles.imagePreview}
+                              src={form[field.name]}
+                              alt="Content preview"
+                            />
                             <button
                               type="button"
                               className={styles.secondaryButton}
-                              style={{ minHeight: "32px", padding: "0 10px", fontSize: "11px" }}
-                              onClick={() => setForm((current) => ({ ...current, [field.name]: "" }))}
+                              style={{
+                                minHeight: "32px",
+                                padding: "0 10px",
+                                fontSize: "11px",
+                              }}
+                              onClick={() =>
+                                setForm((current) => ({
+                                  ...current,
+                                  [field.name]: "",
+                                }))
+                              }
                             >
                               Remove image
                             </button>
@@ -162,7 +220,45 @@ export default function CmsContentManager({ config }) {
                         )}
                         {uploading && <small>Uploading image...</small>}
                       </>
-                      : <input type={field.type === "list" ? "text" : field.type || "text"} min={field.type === "number" ? 0 : undefined} required={field.required} value={field.type === "list" && Array.isArray(form[field.name]) ? form[field.name].join(", ") : form[field.name] ?? ""} onChange={(event) => setForm((current) => ({ ...current, [field.name]: event.target.value }))} />}
+                    ) : field.type === "select" ? (
+                      <select
+                        required={field.required}
+                        value={form[field.name] ?? ""}
+                        onChange={(event) =>
+                          setForm((current) => ({
+                            ...current,
+                            [field.name]: event.target.value,
+                          }))
+                        }
+                      >
+                        {field.options?.map((opt) => {
+                          const val = typeof opt === "object" ? opt.value : opt;
+                          const label = typeof opt === "object" ? opt.label : opt;
+                          return (
+                            <option key={val} value={val}>
+                              {label}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    ) : (
+                      <input
+                        type={field.type === "list" ? "text" : field.type || "text"}
+                        min={field.type === "number" ? 0 : undefined}
+                        required={field.required}
+                        value={
+                          field.type === "list" && Array.isArray(form[field.name])
+                            ? form[field.name].join(", ")
+                            : form[field.name] ?? ""
+                        }
+                        onChange={(event) =>
+                          setForm((current) => ({
+                            ...current,
+                            [field.name]: event.target.value,
+                          }))
+                        }
+                      />
+                    )}
                     {field.hint && <small>{field.hint}</small>}
                   </>}
                 </label>)}

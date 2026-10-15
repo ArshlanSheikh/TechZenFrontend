@@ -571,3 +571,258 @@
   }
 }
 
+/* =========================================================
+   TWO-LEVEL MEGA DROPDOWN (TRAINING)
+========================================================= */
+
+.twoLevelMenu {
+  width: 580px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+}
+
+.dropdownMenuVisible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+.megaContainer {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  min-height: 260px;
+  text-align: left;
+}
+
+.categoryCol {
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menuHeading {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  padding: 8px 10px 4px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.categoryItem:hover,
+.categoryItemActive {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.catCountBadge {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: #e2e8f0;
+  color: #475569;
+  font-weight: 600;
+}
+
+.categoryItemActive .catCountBadge {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.programsCol {
+  padding: 12px 14px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.programsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.programItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #0f172a;
+  background: #f8fafc;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.programItem:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+  transform: translateX(3px);
+}
+
+.programInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.programTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.programMeta {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.programArrow {
+  color: #94a3b8;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.programItem:hover .programArrow {
+  color: #2563eb;
+  transform: translateX(2px);
+}
+
+.noPrograms {
+  padding: 20px 10px;
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.megaFooter {
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdownFooterLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+
+.dropdownFooterLink:hover {
+  gap: 9px;
+  color: #1d4ed8;
+}
+
+/* Mobile two-level categories */
+.mobileCategoryGroup {
+  margin-bottom: 6px;
+}
+
+.mobileCategoryTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.mobileCatBadge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #334155;
+  font-weight: 600;
+}
+
+.mobileSubProgramList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+
+.mobileSubProgramLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #0f172a;
+}
+
+.mobileSubProgramTitle {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mobileSubProgramSub {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.mobileViewAllLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  margin-top: 8px;
+  background: #eff6ff;
+  border-radius: 8px;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+

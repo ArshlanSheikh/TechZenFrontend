@@ -50,7 +50,7 @@ export default function Project() {
                 <div className={styles.visualTop}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
 
-                  <span>{project.category}</span>
+                  <span>{typeof project.category === "object" ? project.category?.name : project.category}</span>
                 </div>
 
                 <div className={styles.projectImage}>
@@ -75,7 +75,7 @@ export default function Project() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <span>{project.category}</span>
+                  <span>{typeof project.category === "object" ? project.category?.name : project.category}</span>
                 </div>
 
                 <h3>{project.title}</h3>

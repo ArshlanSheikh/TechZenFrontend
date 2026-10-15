@@ -4,6 +4,7 @@ import {
   services as fallbackServices,
   projects as fallbackProjects,
   Tranings as fallbackTrainings,
+  trainingCategories as fallbackCategories,
   faqs as fallbackFaqs,
   teamMembers as fallbackTeam,
 } from "../data/siteData";
@@ -31,6 +32,9 @@ export const getFallbackForResource = (resource) => {
     case "trainings":
     case "training":
       return fallbackTrainings || [];
+    case "training-categories":
+    case "trainingCategories":
+      return fallbackCategories || [];
     case "faqs":
     case "faq":
       return normalizeFaqs(fallbackFaqs);

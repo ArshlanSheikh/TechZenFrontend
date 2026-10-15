@@ -1,0 +1,1257 @@
+/* =========================================================================
+   TECHZEN TRAINING DETAIL PAGE - DARK THEME WITH BLUE/PURPLE ACCENTS
+========================================================================= */
+
+.pageWrapper {
+  min-height: 100vh;
+  background-color: #050b14;
+  color: #f1f5f9;
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding-top: 80px; /* offset fixed navbar */
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Ambient Glows */
+.pageWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  width: 600px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pageWrapper::after {
+  content: "";
+  position: absolute;
+  top: 400px;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 80px;
+}
+
+/* =========================================================================
+   BREADCRUMBS
+========================================================================= */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: #94a3b8;
+  padding: 24px 0 16px;
+}
+
+.breadcrumbLink {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #38bdf8;
+}
+
+.breadcrumbCurrent {
+  color: #e2e8f0;
+  font-weight: 500;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumbSeparator {
+  color: #475569;
+}
+
+/* =========================================================================
+   HERO / HEADER SECTION
+========================================================================= */
+
+.heroSection {
+  padding: 10px 0 32px;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.programTitle {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(28px, 4.5vw, 46px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, #ffffff 40%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.programIntro {
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.6;
+  color: #94a3b8;
+  max-width: 860px;
+  margin: 0 0 28px;
+}
+
+/* Quick Info Highlights Bar */
+.highlightsBar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  margin-bottom: 32px;
+}
+
+.highlightItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.highlightIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(139, 92, 246, 0.15));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  display: grid;
+  place-items: center;
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.highlightText {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlightLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.highlightValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+/* Banner Image Showcase */
+.bannerContainer {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  max-height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  margin-bottom: 40px;
+  background: #0b1324;
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.bannerContainer:hover .bannerImage {
+  transform: scale(1.02);
+}
+
+.bannerOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 11, 20, 0.85) 0%, rgba(5, 11, 20, 0.2) 60%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+
+.bannerCaption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* =========================================================================
+   TWO-COLUMN DETAIL LAYOUT
+========================================================================= */
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (min-width: 1200px) {
+  .mainLayout {
+    grid-template-columns: minmax(0, 1fr) 390px;
+    gap: 44px;
+  }
+}
+
+/* Left Content Column */
+.contentCol {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 0;
+}
+
+/* Section Cards */
+.contentSection {
+  background: rgba(13, 24, 41, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 32px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.2s ease;
+}
+
+.contentSection:hover {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.sectionTitle svg {
+  color: #3b82f6;
+}
+
+/* Paragraph styling */
+.richText {
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.75;
+  margin: 0 0 16px;
+  white-space: pre-line;
+}
+
+.richText:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================================
+   TECHNOLOGIES CLOUD / CARDS
+========================================================================= */
+
+.techGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.techCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #e2e8f0;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.techCard:hover {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: #3b82f6;
+  color: #60a5fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.techDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+}
+
+/* =========================================================================
+   STRUCTURED SYLLABUS ACCORDION
+========================================================================= */
+
+.syllabusControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggleAllBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleAllBtn:hover {
+  color: #ffffff;
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.syllabusList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.moduleCard {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.5);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.moduleCardActive {
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.moduleHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  gap: 12px;
+}
+
+.moduleLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.moduleIndexBadge {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.topicCountBadge {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.moduleIcon {
+  color: #94a3b8;
+  transition: transform 0.25s ease;
+}
+
+.moduleIconOpen {
+  transform: rotate(180deg);
+  color: #38bdf8;
+}
+
+.moduleBody {
+  padding: 0 20px 18px 58px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.topicList {
+  list-style: none;
+  padding: 12px 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topicItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.topicBullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* =========================================================================
+   PROJECTS SECTION
+========================================================================= */
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.projectCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+}
+
+.projectCard:hover {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.projectIconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  display: grid;
+  place-items: center;
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.projectDetails {
+  flex: 1;
+}
+
+.projectTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px;
+}
+
+.projectTag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* =========================================================================
+   LEARNING OUTCOMES & BENEFITS GRIDS
+========================================================================= */
+
+.outcomesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.outcomeCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.checkIcon {
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.outcomeText {
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* Benefits Grid */
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.benefitCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4));
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.benefitIconBox {
+  color: #38bdf8;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.benefitText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+/* =========================================================================
+   CERTIFICATION SHOWCASE
+========================================================================= */
+
+.certificateCard {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.25) 0%, rgba(88, 28, 135, 0.2) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.certBadgeBox {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+.certContent {
+  flex: 1;
+}
+
+.certHeading {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.certDesc {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* =========================================================================
+   FAQS ACCORDION
+========================================================================= */
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faqItem {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.5);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.faqItemOpen {
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.faqQuestionBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  gap: 12px;
+}
+
+.faqQuestionBtn svg {
+  color: #94a3b8;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.faqQuestionBtn svg.faqArrowOpen {
+  transform: rotate(180deg);
+  color: #38bdf8;
+}
+
+.faqAnswerBox {
+  padding: 0 20px 18px;
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
+}
+
+/* =========================================================================
+   RIGHT STICKY SIDEBAR
+========================================================================= */
+
+.sidebarSticky {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebarCard {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(11, 19, 36, 0.9));
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebarCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #8b5cf6, #00d3aa);
+}
+
+.pricingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.cohortTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #93c5fd;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.discountBadge {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Pricing Display */
+.priceBox {
+  margin-bottom: 22px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.activePrice {
+  font-family: "Manrope", sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 40%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.originalPrice {
+  font-size: 18px;
+  color: #64748b;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.pricingTypeLabel {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+
+/* Schedule / Batch Specs in Sidebar */
+.sidebarSpecs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 22px;
+}
+
+.specRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.specName {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.specVal {
+  color: #f1f5f9;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Sidebar Action Buttons */
+.ctaButtonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.primaryCta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.primaryCta:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.55);
+  transform: translateY(-2px);
+}
+
+.whatsappCta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.whatsappCta:hover {
+  background: rgba(16, 185, 129, 0.25);
+  color: #6ee7b7;
+  transform: translateY(-2px);
+}
+
+.phoneCta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.phoneCta:hover {
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* Sidebar Included Perks Checklist */
+.perksList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.perkCheck {
+  color: #34d399;
+  flex-shrink: 0;
+}
+
+/* Support Help Card */
+.supportCard {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.supportTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.supportRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.supportRow:hover {
+  color: #38bdf8;
+}
+
+/* =========================================================================
+   ENQUIRY MODAL (POPUP)
+========================================================================= */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modalWindow {
+  background: #0b1324;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 20px;
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  padding: 28px 30px;
+  position: relative;
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.modalEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #3b82f6;
+  letter-spacing: 0.08em;
+  margin: 0 0 6px;
+}
+
+.modalTitle {
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+}
+
+.modalSubtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0 0 24px;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.fieldInput,
+.fieldSelect,
+.fieldTextarea {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fieldInput:focus,
+.fieldSelect:focus,
+.fieldTextarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.modalSubmitBtn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
+}
+
+.modalSubmitBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  transform: translateY(-1px);
+}
+
+.modalSubmitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alertBox {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.alertError {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.alertSuccess {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+/* =========================================================================
+   LOADING & NOT FOUND STATES
+========================================================================= */
+
+.loadingContainer,
+.notFoundContainer {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 18px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.notFoundTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px;
+}
+
+.notFoundText {
+  color: #94a3b8;
+  max-width: 480px;
+  margin: 0 0 24px;
+  font-size: 15px;
+}
+
+.backHomeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.backHomeBtn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* =========================================================================
+   RESPONSIVE MEDIA QUERIES
+========================================================================= */
+
+@media (max-width: 1024px) {
+  .mainLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebarSticky {
+    position: static;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentSection {
+    padding: 22px 18px;
+  }
+
+  .bannerContainer {
+    height: 240px;
+  }
+
+  .highlightsBar {
+    grid-template-columns: 1fr 1fr;
+    padding: 14px;
+  }
+
+  .certificateCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .moduleHeader {
+    padding: 14px 16px;
+  }
+
+  .moduleBody {
+    padding: 0 16px 16px 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlightsBar {
+    grid-template-columns: 1fr;
+  }
+}
